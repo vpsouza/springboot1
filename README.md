@@ -63,83 +63,20 @@ Install docker (Oficial website for docker)
    https://docs.docker.com/engine/installation/linux/ubuntu/
 ```
 
-### Prerequisities
-add easycustomer-api.easyapps.local to your /etc/hosts file
-
 ### Running the app
 
 ```
 docker-compose up -d
 ```
 
-Then make a post to http://easycustomer-api.easyapps.local/api/initDB to configure your database and you are free to call 
-the app through http://easycustomer-api.easyapps.local/api/<some-endpoint>
-
 ## Running the tests
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* Dropwizard - Bla bla bla
-* Maven - Maybe
-* Atom - ergaerga
-
-## Contributing
-
-Please read 
-[CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426)
- for details on our code of conduct, and the process for submitting 
- pull requests to us.
-
-## Versioning
-
-We use [Git](http://www.bitbucket.org) for versioning. For the versions 
-available, see the 
-[tags on this repository](https://bitbucket.org/easyappscloud/easycustomer). 
-
 ## Authors
 
-* **Andre Felix** - *Initial work* - @ [bitBucket](https://bitbucket.org/easyappscloud/easycustomer)
-
-See also the list of [contributors](https://bitbucket.org/easyappscloud/profile/members) who participated in this project.
+* **Vinicius Piedade de Souza**
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
-TODO:
- Add WildFly-addResouce 
-CLI Jboss Add resources
-
-Create the FinancialWeb
-	Accounts payable
-	Receivables accounts
-- User CRUD
-- Front end
