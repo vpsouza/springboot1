@@ -33,7 +33,8 @@ public class Application {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedOrigins("http://localhost:3000");
+            	//registry.addMapping("/*").allowedOrigins("http://localhost:3000");
+            	registry.addMapping("/*").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
             }
         };
     }
