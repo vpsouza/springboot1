@@ -69,7 +69,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyInvalidProductId() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/todo/0").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/products/0").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.errorCode").value(404))
 		.andExpect(jsonPath("$.violations", hasSize(1)))
 		.andExpect(jsonPath("$.violations[0].errorMessage").value("Product does not exists"))
