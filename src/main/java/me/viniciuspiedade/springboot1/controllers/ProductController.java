@@ -36,7 +36,7 @@ public class ProductController {
 	@JsonView(View.Summary.class)
 	@RequestMapping(path = "/products", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> getAllSumarized() {
-		logger.info("returning all products...");
+		logger.info("returning all summarized products...");
 
 		return new ResponseEntity<List<Product>>(productService.getAll(), HttpStatus.OK);
 	}
@@ -51,7 +51,7 @@ public class ProductController {
 	@JsonView(View.Summary.class)
 	@RequestMapping(path = "/products/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Product> getByIdSumarized(@PathVariable("id") long id) throws ProductException {
-		logger.info("returning a product by id...");
+		logger.info("returning a summarized product by id...");
 
 		Product product = productService.getById(id);
 

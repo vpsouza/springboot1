@@ -48,6 +48,32 @@ public class ProductServiceTest {
 	}
 	
 	@Test
+	public void testGetAllProductWithChilds(){
+		List<Product> ProductList = new ArrayList<Product>();
+		ProductList.add(new Product(1l, "Product 1", "Product Sample 1", null));
+		ProductList.add(new Product(2l, "Product 2", "Product Sample 2", null));
+		ProductList.add(new Product(3l, "Product 3", "Product Sample 3", null));
+		ProductList.add(new Product(4l, "Product 4", "Product Sample 4", null));;
+		when(productRepository.getAllWithChilds()).thenReturn(ProductList);
+		
+		List<Product> result = productService.getAllWithChilds();
+		assertEquals(4, result.size());
+	}
+	
+	@Test
+	public void testGetChildsById(){
+		List<Product> ProductList = new ArrayList<Product>();
+		ProductList.add(new Product(1l, "Product 1", "Product Sample 1", null));
+		ProductList.add(new Product(2l, "Product 2", "Product Sample 2", null));
+		ProductList.add(new Product(3l, "Product 3", "Product Sample 3", null));
+		ProductList.add(new Product(4l, "Product 4", "Product Sample 4", null));;
+		when(productRepository.getChildsById(1L)).thenReturn(ProductList);
+		
+		List<Product> result = productService.getChildsById(1L);
+		assertEquals(4, result.size());
+	}
+	
+	@Test
 	public void testGetProductById(){
 		Product Product = new Product(1l, "Product 1", "Product Sample 1", null);
 		when(productRepository.findOne(1L)).thenReturn(Product);
