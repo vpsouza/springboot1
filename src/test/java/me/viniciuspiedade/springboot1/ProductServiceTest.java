@@ -8,12 +8,16 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import me.viniciuspiedade.springboot1.model.Product;
@@ -21,6 +25,7 @@ import me.viniciuspiedade.springboot1.repositories.ProductRepository;
 import me.viniciuspiedade.springboot1.services.ProductServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public class ProductServiceTest {
 
 	@Mock
@@ -32,6 +37,11 @@ public class ProductServiceTest {
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
+	}
+	
+	@After
+	public void reset(){
+		Mockito.reset(this);
 	}
 	
 	@Test

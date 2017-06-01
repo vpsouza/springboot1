@@ -12,6 +12,8 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@DirtiesContext(classMode=ClassMode.BEFORE_CLASS)
 public class ProductControllerTest {
 
 	private MockMvc mockMvc;
@@ -50,13 +53,13 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyProductById() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/products/1").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/products/8").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.id").exists())
 		.andExpect(jsonPath("$.name").exists())
 		.andExpect(jsonPath("$.description").exists())
-		.andExpect(jsonPath("$.id").value(1))
-		.andExpect(jsonPath("$.name").value("Product 1"))
-		.andExpect(jsonPath("$.description").value("A Product 1"))
+		.andExpect(jsonPath("$.id").value(8))
+		.andExpect(jsonPath("$.name").value("Product 2"))
+		.andExpect(jsonPath("$.description").value("A Product 2"))
 		.andDo(print());
 	}
 	
@@ -79,13 +82,13 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyProductByIdAll() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/products/1/all").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/products/8/all").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.id").exists())
 		.andExpect(jsonPath("$.name").exists())
 		.andExpect(jsonPath("$.description").exists())
-		.andExpect(jsonPath("$.id").value(1))
-		.andExpect(jsonPath("$.name").value("Product 1"))
-		.andExpect(jsonPath("$.description").value("A Product 1"))
+		.andExpect(jsonPath("$.id").value(8))
+		.andExpect(jsonPath("$.name").value("Product 2"))
+		.andExpect(jsonPath("$.description").value("A Product 2"))
 		.andExpect(jsonPath("$.children").exists())
 		.andExpect(jsonPath("$.images").exists())
 		.andDo(print());
@@ -93,7 +96,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyProductByIdIMages() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/products/1/images").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/products/8/images").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$", hasSize(3)))
 		.andExpect(jsonPath("$[0].id").exists())
 		.andExpect(jsonPath("$[0].type").exists())
@@ -102,7 +105,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyProductByIdChildren() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/products/1/children").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.get("/products/8/children").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$", hasSize(5)))
 		.andExpect(jsonPath("$[0].id").exists())
 		.andExpect(jsonPath("$[0].name").exists())
@@ -112,7 +115,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void verifyDeleteProduct() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/products/1").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders.delete("/products/8").accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.status").value(200))
 		.andExpect(jsonPath("$.message").value("Product has been deleted!"))
 		.andDo(print());
@@ -159,12 +162,12 @@ public class ProductControllerTest {
 	public void verifyUpdateProduct() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.patch("/products/")
         .contentType(MediaType.APPLICATION_JSON)
-        .content("{ \"id\": 1, \"name\": \"Iphone 7 Plus\", \"description\": \"New Description is Iphone 7 Plus 256gb Black Piano\" }")
+        .content("{ \"id\": 8, \"name\": \"Iphone 7 Plus\", \"description\": \"New Description is Iphone 7 Plus 256gb Black Piano\" }")
         .accept(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.id").exists())
 		.andExpect(jsonPath("$.name").exists())
 		.andExpect(jsonPath("$.description").exists())
-		.andExpect(jsonPath("$.name").value(1))
+		.andExpect(jsonPath("$.id").value(8))
 		.andExpect(jsonPath("$.name").value("Iphone 7 Plus"))
 		.andExpect(jsonPath("$.description").value("New Description is Iphone 7 Plus 256gb Black Piano"))
 		.andDo(print());
