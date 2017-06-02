@@ -65,6 +65,17 @@ public class ProductControllerTest {
 		}).collect(Collectors.toList());
 	}
 	
+	private Product getMockById(boolean all){
+		Product parent = new Product(1l, "Product 1", "A Product 1", null);
+		
+		if(all){
+			parent.getChildren().addAll(Arrays.asList(2l, 3l, 4l).stream().map(idProd -> new Product(idProd, "Child Product " + idProd, "A Child Product " + idProd, parent)).collect(Collectors.toList()));
+			parent.getImages().addAll(Arrays.asList(2l, 3l, 4l).stream().map(idImg -> new Image(idImg, "Img type " + idImg, parent)).collect(Collectors.toList()));
+		}
+		
+		return parent;
+	}
+	
 	@Test
 	public void verifyProductList() throws Exception {
 		given(productService.getAll()).willReturn(getMockListAll(false));
@@ -111,17 +122,6 @@ public class ProductControllerTest {
 		.andExpect(jsonPath("$.violations[0].errorMessage").value("Product does not exists"))
 		.andExpect(jsonPath("$.violations[0].error").value("PRODUCT_NOT_EXISTS"))
 		.andDo(print());
-	}
-	
-	private Product getMockById(boolean all){
-		Product parent = new Product(1l, "Product 1", "A Product 1", null);
-		
-		if(all){
-			parent.getChildren().addAll(Arrays.asList(2l, 3l, 4l).stream().map(idProd -> new Product(idProd, "Child Product " + idProd, "A Child Product " + idProd, parent)).collect(Collectors.toList()));
-			parent.getImages().addAll(Arrays.asList(2l, 3l, 4l).stream().map(idImg -> new Image(idImg, "Img type " + idImg, parent)).collect(Collectors.toList()));
-		}
-		
-		return parent;
 	}
 	
 	@Test

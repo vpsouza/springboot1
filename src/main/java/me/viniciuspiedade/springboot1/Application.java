@@ -10,9 +10,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import me.viniciuspiedade.springboot1.model.Image;
 import me.viniciuspiedade.springboot1.model.Product;
@@ -33,15 +37,24 @@ public class Application {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-            	registry.addMapping("/*").allowedOrigins("http://localhost:3000");
-            	registry.addMapping("/*/*").allowedOrigins("http://localhost:3000");
-            	registry.addMapping("/*/*/*").allowedOrigins("http://localhost:3000");
-//            	registry.addMapping("/*").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
-//            	registry.addMapping("/*/*").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
-//            	registry.addMapping("/*/*/*").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
+//            	registry.addMapping("/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("http://localhost:3000");
+//            	registry.addMapping("/*/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("http://localhost:3000");
+//            	registry.addMapping("/*/*/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("http://localhost:3000");
+            	registry.addMapping("/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
+            	registry.addMapping("/*/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
+            	registry.addMapping("/*/*/*").allowedMethods("GET", "POST", "PATCH", "DELETE", "HEAD").allowedOrigins("https://vpsouza-springboot1-react.firebaseapp.com");
             }
         };
     }
+	
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+	    MappingJackson2HttpMessageConverter converter = 
+	        new MappingJackson2HttpMessageConverter(mapper);
+	    return converter;
+	}
 	
 	@Bean
 	@Transactional

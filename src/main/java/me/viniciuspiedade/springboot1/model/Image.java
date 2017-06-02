@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope=Image.class)
 public class Image {
 
 	@Id

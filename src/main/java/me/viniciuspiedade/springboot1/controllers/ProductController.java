@@ -131,10 +131,17 @@ public class ProductController {
 			throw new ProductException(validationResult.getViolations().get());
 		}
 		
-		payload.getChildren().stream().forEach(child -> child.setParent(payload));
-		payload.getImages().stream().forEach(child -> child.setProduct(payload));
+		fetchChildrenWithParend(payload);
 
 		return new ResponseEntity<Product>(productService.save(payload), HttpStatus.OK);
+	}
+	
+	private void fetchChildrenWithParend(Product payload){
+		payload.getChildren().stream().forEach(child -> child.setParent(payload));
+		payload.getImages().stream().forEach(child -> child.setProduct(payload));
+		if(payload.getParent() != null && payload.getParent().getId() > 0){
+			payload.setParent(productService.getById(payload.getParent().getId()));
+		}
 	}
 
 	@RequestMapping(path = "/products", method = RequestMethod.PATCH)
@@ -151,6 +158,8 @@ public class ProductController {
 		if (!validationResult.isValid()) {
 			throw new ProductException(validationResult.getViolations().get());
 		}
+		
+		fetchChildrenWithParend(payload);
 
 		return new ResponseEntity<Product>(productService.save(payload), HttpStatus.OK);
 	}

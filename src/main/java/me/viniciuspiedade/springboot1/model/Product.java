@@ -13,8 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -23,7 +23,9 @@ import me.viniciuspiedade.springboot1.util.View;
 @Entity
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope=Product.class)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Product {
 
 	@Id
@@ -41,7 +43,10 @@ public class Product {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.MERGE)
 	@JoinColumn(name="parent_id")
-	@JsonBackReference
+	//@JsonBackReference
+	@JsonIdentityInfo(
+			  generator = ObjectIdGenerators.PropertyGenerator.class, 
+			  property = "id")
 	private Product parent;
 	
 	@OneToMany(mappedBy="parent", orphanRemoval = true, cascade=CascadeType.ALL)
