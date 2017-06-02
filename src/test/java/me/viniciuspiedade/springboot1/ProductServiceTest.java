@@ -1,6 +1,7 @@
 package me.viniciuspiedade.springboot1;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,14 +9,10 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,17 +28,12 @@ public class ProductServiceTest {
 	@Mock
 	private ProductRepository productRepository;
 	
-	@InjectMocks
 	private ProductServiceImpl productService;
 	
 	@Before
 	public void setup(){
-		MockitoAnnotations.initMocks(this);
-	}
-	
-	@After
-	public void reset(){
-		Mockito.reset(this);
+		productRepository = mock(ProductRepository.class);
+		productService = new ProductServiceImpl(productRepository);
 	}
 	
 	@Test
