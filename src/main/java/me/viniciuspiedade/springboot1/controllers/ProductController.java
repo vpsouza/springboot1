@@ -140,7 +140,7 @@ public class ProductController {
 		payload.getChildren().stream().forEach(child -> child.setParent(payload));
 		payload.getImages().stream().forEach(child -> child.setProduct(payload));
 		if(payload.getParent() != null && payload.getParent().getId() > 0){
-			payload.setParent(productService.getById(payload.getParent().getId()));
+			fetchChildrenWithParend(payload.getParent());
 		}
 	}
 
